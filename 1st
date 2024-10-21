@@ -1,0 +1,564 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> drop database world;
+Query OK, 3 rows affected (0.14 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> drop database sys;
+Query OK, 101 rows affected (0.27 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> drop database sakila;
+Query OK, 23 rows affected (0.43 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> create database college;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> create database branch;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| branch             |
+| college            |
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use college;
+Database changed
+mysql> create table sandip;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table sandip(primary key id,college_name char(30),branches char(30),fees float;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',college_name char(30),branches char(30),fees float' at line 1
+mysql> create table sandip(primary key (id),id int,college_name char(30),branches char(30),fees float;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table sandip(id int,college_name char(30),branches char(30),fees float,primary key(id));
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> insert into sandip values(1,'SITRC',Two,100);
+ERROR 1054 (42S22): Unknown column 'Two' in 'field list'
+mysql> insert into sandip values(1,'SITRC',2,100);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from sandip;
++----+--------------+----------+------+
+| id | college_name | branches | fees |
++----+--------------+----------+------+
+|  1 | SITRC        | 2        |  100 |
++----+--------------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> decp sandip;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decp sandip' at line 1
+mysql> desc sandip;
++--------------+----------+------+-----+---------+-------+
+| Field        | Type     | Null | Key | Default | Extra |
++--------------+----------+------+-----+---------+-------+
+| id           | int      | NO   | PRI | NULL    |       |
+| college_name | char(30) | YES  |     | NULL    |       |
+| branches     | char(30) | YES  |     | NULL    |       |
+| fees         | float    | YES  |     | NULL    |       |
++--------------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> use branch
+Database changed
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> i
+    -> ^C
+mysql>
+mysql>
+mysql> desc branches;
++-----------------+---------+------+-----+---------+-------+
+| Field           | Type    | Null | Key | Default | Extra |
++-----------------+---------+------+-----+---------+-------+
+| branch_id       | int     | YES  |     | NULL    |       |
+| branch_name     | char(1) | YES  |     | NULL    |       |
+| total_stafs     | char(1) | YES  |     | NULL    |       |
+| total_classroom | char(1) | YES  |     | NULL    |       |
++-----------------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table branches(branch_id int,primary key(branch_id));
+ERROR 1050 (42S01): Table 'branches' already exists
+mysql> alter table branches(branch_id=primary key);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(branch_id=primary key)' at line 1
+mysql> alter table branches branch_id =primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'branch_id =primary key' at line 1
+mysql> alter table branches primary key(branch_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(branch_id)' at line 1
+mysql> drop table branch;
+ERROR 1051 (42S02): Unknown table 'branch.branch'
+mysql> drop table branches;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) refrences sandip(id) primary key(branch_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refrences sandip(id) primary key(branch_id)' at line 1
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) references sandip(i
+d) primary key(branch_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(branch_id)' at line 1
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) references sandip(id) primary key(branch_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(branch_id)' at line 1
+mysql>
+mysql>
+mysql>
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) references sandip(id) primary key(branch_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(branch_id))' at line 1
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) references sandip(id) primary key(branch_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(branch_id))' at line 1
+mysql>
+mysql>
+mysql>
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) references sandip(id) primary key(branch_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(branch_id))' at line 1
+mysql>
+mysql>
+mysql>
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) references sandip(id) );
+ERROR 1072 (42000): Key column 'id' doesn't exist in table
+mysql> create table branches(branch_id int,branch_name char,total_stafs char,total_classroom char,primary key(branch_id),foreign key(id) references sandip(id) );
+ERROR 1072 (42000): Key column 'id' doesn't exist in table
+mysql>
+mysql>
+mysql>
+mysql> CREATE TABLE branches (
+    ->     branch_id INT,
+    ->     branch_name VARCHAR(50),
+    ->     total_staffs INT,
+    ->     total_classroom INT,
+    ->     sandip_id INT,
+    ->     PRIMARY KEY(branch_id),
+    ->     FOREIGN KEY (sandip_id) REFERENCES sandip(id)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'sandip'
+mysql> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql>
+mysql>
+mysql>
+mysql> use branches;
+ERROR 1049 (42000): Unknown database 'branches'
+mysql> use branch;
+Database changed
+mysql> CREATE TABLE branches (
+    ->     branch_id INT,
+    ->     branch_name VARCHAR(50),
+    ->     total_staffs INT,
+    ->     total_classroom INT,
+    ->     sandip_id INT,
+    ->     PRIMARY KEY(branch_id),
+    ->     FOREIGN KEY (sandip_id) REFERENCES sandip(id)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'sandip'
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| branch             |
+| college            |
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> drop database branch;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> drop database college;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> clear
+mysql> clear;
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> create database one;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> desc one;
+ERROR 1046 (3D000): No database selected
+mysql> create database two;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> use one;
+Database changed
+mysql>
+mysql>
+mysql> desc one;
+ERROR 1146 (42S02): Table 'one.one' doesn't exist
+mysql> create table clg(id,name,address,phone,primary key
+    -> (id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',name,address,phone,primary key
+(id)' at line 1
+mysql> create table clg(id int,name chaar,address char,phone int,primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'chaar,address char,phone int,primary key(id)' at line 1
+mysql> create table clg(id int,name chaar,address char,phone int,primary key(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'chaar,address char,phone int,primary key(id))' at line 1
+mysql> create table clg(id int,name char,address char,phone int,primary key(id));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc clg;
++---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| id      | int     | NO   | PRI | NULL    |       |
+| name    | char(1) | YES  |     | NULL    |       |
+| address | char(1) | YES  |     | NULL    |       |
+| phone   | int     | YES  |     | NULL    |       |
++---------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> insert into clg values(1,'SITRC','Trimbak',1800);
+ERROR 1406 (22001): Data too long for column 'name' at row 1
+mysql> insert into clg values(1,'S','T',1800);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc clg;
++---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| id      | int     | NO   | PRI | NULL    |       |
+| name    | char(1) | YES  |     | NULL    |       |
+| address | char(1) | YES  |     | NULL    |       |
+| phone   | int     | YES  |     | NULL    |       |
++---------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select *from clg;
++----+------+---------+-------+
+| id | name | address | phone |
++----+------+---------+-------+
+|  1 | S    | T       |  1800 |
++----+------+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into clg values(2,'A','N',1900);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select *from clg;
++----+------+---------+-------+
+| id | name | address | phone |
++----+------+---------+-------+
+|  1 | S    | T       |  1800 |
+|  2 | A    | N       |  1900 |
++----+------+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into clg values(3,'K','K',8010);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> use two;
+Database changed
+mysql> create table branc(b_id int,name varchar(20),t_staff varchar(44),primary key(b_id));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc two;
+ERROR 1146 (42S02): Table 'two.two' doesn't exist
+mysql> desc branch;
+ERROR 1146 (42S02): Table 'two.branch' doesn't exist
+mysql> desc branc;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| b_id    | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| t_staff | varchar(44) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table branc;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> drop database two;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| one                |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> use one;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_one |
++---------------+
+| clg           |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> desc clg;
++---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| id      | int     | NO   | PRI | NULL    |       |
+| name    | char(1) | YES  |     | NULL    |       |
+| address | char(1) | YES  |     | NULL    |       |
+| phone   | int     | YES  |     | NULL    |       |
++---------+---------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select *from clg;
++----+------+---------+-------+
+| id | name | address | phone |
++----+------+---------+-------+
+|  1 | S    | T       |  1800 |
+|  2 | A    | N       |  1900 |
+|  3 | K    | K       |  8010 |
++----+------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table clg modify name char
+    -> (50);
+Query OK, 3 rows affected (0.13 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> alter table clg modify address char(20);
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> update clg set name='SITRC' where id='1';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from clg;
++----+-------+---------+-------+
+| id | name  | address | phone |
++----+-------+---------+-------+
+|  1 | SITRC | T       |  1800 |
+|  2 | A     | N       |  1900 |
+|  3 | K     | K       |  8010 |
++----+-------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update clg set name='SIEM' where id=2;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from clg;
++----+-------+---------+-------+
+| id | name  | address | phone |
++----+-------+---------+-------+
+|  1 | SITRC | T       |  1800 |
+|  2 | SIEM  | N       |  1900 |
+|  3 | K     | K       |  8010 |
++----+-------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update clg set name=SIPS where id=3;
+ERROR 1054 (42S22): Unknown column 'SIPS' in 'field list'
+mysql> update clg set name='SIPS' where id=3;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from clg;
++----+-------+---------+-------+
+| id | name  | address | phone |
++----+-------+---------+-------+
+|  1 | SITRC | T       |  1800 |
+|  2 | SIEM  | N       |  1900 |
+|  3 | SIPS  | K       |  8010 |
++----+-------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_one |
++---------------+
+| clg           |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> create table branches(b_id int,b_name char(20),t_staff char(20),primary key(b_id),foreign key(id) references primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(id)' at line 1
+mysql> create table branches(b_id int,b_name char(20),t_staff char(20),primary key(b_id),foreign key(id) references clg primary key(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(id)' at line 1
+mysql> create table branches(b_id int,b_name char(20),t_staff char(20),foreign key(id) references clg primary key(id),primary key(b_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(id),primary key(b_id))' at line 1
+mysql> create table branches(b_id int,b_name char(20),t_staff char(20),foreign key(id) references clg primary key(id),primary key(b_id));
+gn key(id) references clg(id),primary key(b_id));
+ERROR 1072 (42000): Key column 'id' doesn't exist in table
+mysql> create table branches(b_id int,b_name char(20),t_staff char(20),foreign key(id) references clg(id),primary key(b_id));
+ERROR 1072 (42000): Key column 'id' doesn't exist in table
+mysql>
+mysql>
+mysql>
+mysql> show tables;
++---------------+
+| Tables_in_one |
++---------------+
+| clg           |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> create table emp_finance(pay_id int auto_increment, em_id int, ensalary int,em_contract date, foreign key(em_id) references
+    -> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show tables' at line 2
+mysql> CREATE TABLE branches (
+    ->     b_id INT,
+    ->     b_name CHAR(20),
+    ->     t_staff CHAR(20),
+    ->     clg_id INT,  -- Add the column that will reference the primary key of clg table
+    ->     PRIMARY KEY(b_id),
+    ->     FOREIGN KEY (clg_id) REFERENCES clg(id)  -- Proper foreign key reference
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_one |
++---------------+
+| branches      |
+| clg           |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> select *from branches;
+Empty set (0.00 sec)
+
+mysql> desc branches;
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| b_id    | int      | NO   | PRI | NULL    |       |
+| b_name  | char(20) | YES  |     | NULL    |       |
+| t_staff | char(20) | YES  |     | NULL    |       |
+| clg_id  | int      | YES  | MUL | NULL    |       |
++---------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> desc clg;
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| id      | int      | NO   | PRI | NULL    |       |
+| name    | char(50) | YES  |     | NULL    |       |
+| address | char(20) | YES  |     | NULL    |       |
+| phone   | int      | YES  |     | NULL    |       |
++---------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
